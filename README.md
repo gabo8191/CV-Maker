@@ -12,8 +12,6 @@
     <img src="https://img.shields.io/badge/Vite-6-646CFF?logo=vite&logoColor=white" alt="Vite" />
     <img src="https://img.shields.io/badge/Tailwind-4-38BDF8?logo=tailwindcss&logoColor=white" alt="Tailwind" />
   </p>
-
-  <p><a href="https://gabo8191.github.io/CV-Maker/"><strong>▶ Live demo</strong></a></p>
 </div>
 
 ---
