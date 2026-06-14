@@ -1,0 +1,65 @@
+@import 'tailwindcss';
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    Inter,
+    sans-serif;
+}
+
+/* La hoja del CV usa una tipografía clásica para un acabado elegante. */
+.cv-paper {
+  font-family: 'Georgia', 'Times New Roman', ui-serif, serif;
+}
+
+/* ── Impresión / exportar a PDF ───────────────────────────────────────
+   Al imprimir solo se muestra la hoja del CV (.print-area), a tamaño
+   completo y sin la interfaz del editor. El navegador genera un PDF
+   vectorial (texto seleccionable) idéntico a la previsualización. */
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  body {
+    background: #fff;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .print-area {
+    position: static !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  .print-area .cv-paper {
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    min-height: auto !important;
+  }
+}
