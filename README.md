@@ -4,9 +4,6 @@
   <p>Dynamic inputs · add experience & sections on the fly · no sign-up · 100% in your browser.</p>
 
   <p>
-    <a href="https://github.com/gabo8191/CV-Maker/actions/workflows/ci.yml">
-      <img src="https://github.com/gabo8191/CV-Maker/actions/workflows/ci.yml/badge.svg" alt="CI" />
-    </a>
     <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT" /></a>
     <img src="https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black" alt="React 18" />
     <img src="https://img.shields.io/badge/Vite-6-646CFF?logo=vite&logoColor=white" alt="Vite" />
