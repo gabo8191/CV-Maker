@@ -1,4 +1,28 @@
+import { useEffect, useRef, useState } from 'react';
 import type { CVData, Section } from '../lib/types';
+
+// Escala la hoja A4 para que quepa a lo ancho del contenedor (máx. 1).
+// Así la previsualización nunca desborda ni obliga a scroll horizontal.
+const PAPER_WIDTH = 794; // 210mm a 96dpi
+function useFitToWidth() {
+  const ref = useRef<HTMLDivElement>(null); // contenedor (mide ancho)
+  const paperRef = useRef<HTMLDivElement>(null); // hoja (mide alto real)
+  const [scale, setScale] = useState(1);
+  const [paperH, setPaperH] = useState(297 * (96 / 25.4));
+  useEffect(() => {
+    const cont = ref.current;
+    const paper = paperRef.current;
+    if (!cont || !paper) return;
+    const ro = new ResizeObserver(() => {
+      setScale(Math.min(1, cont.clientWidth / PAPER_WIDTH));
+      setPaperH(paper.offsetHeight);
+    });
+    ro.observe(cont);
+    ro.observe(paper);
+    return () => ro.disconnect();
+  }, []);
+  return { ref, paperRef, scale, paperH };
+}
 
 function ContactBar({ data }: { data: CVData }) {
   const parts = [
@@ -103,11 +127,23 @@ function SectionView({ section }: { section: Section }) {
 }
 
 export default function Preview({ data }: { data: CVData }) {
+  const { ref, paperRef, scale, paperH } = useFitToWidth();
   return (
-    <div
-      className="cv-paper mx-auto bg-white px-10 py-9 text-zinc-900 shadow-2xl"
-      style={{ width: '210mm', minHeight: '297mm' }}
-    >
+    // El medidor ocupa el ancho disponible; reservamos la altura ya escalada
+    // (transform no afecta el flujo, sin esto sobraría espacio al hacer scroll).
+    <div ref={ref} className="cv-fit w-full">
+      <div
+        style={{
+          transform: `scale(${scale})`,
+          transformOrigin: 'top left',
+          height: paperH * scale,
+        }}
+      >
+        <div
+          ref={paperRef}
+          className="cv-paper bg-white px-10 py-9 text-zinc-900 shadow-2xl"
+          style={{ width: '210mm', minHeight: '297mm' }}
+        >
       <header className="text-center">
         <h1 className="text-[22px] font-bold uppercase tracking-wide text-zinc-900">
           {data.name}
@@ -130,6 +166,8 @@ export default function Preview({ data }: { data: CVData }) {
       {data.sections.map((section) => (
         <SectionView key={section.id} section={section} />
       ))}
+        </div>
+      </div>
     </div>
   );
 }

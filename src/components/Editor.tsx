@@ -123,30 +123,34 @@ export default function Editor({ data, setData }: Props) {
             key={section.id}
             className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-4"
           >
-            <div className="mb-3 flex items-center gap-2">
+            {/* En móvil el título ocupa toda la fila y los controles bajan;
+                en sm+ van todos en línea. Evita que se recorten los botones. */}
+            <div className="mb-3 flex flex-wrap items-center gap-2">
               <input
                 value={section.title}
                 onChange={(e) =>
                   updateSection(section.id, { title: e.target.value })
                 }
-                className="flex-1 rounded-lg border border-zinc-700 bg-zinc-800/60 px-3 py-1.5 text-sm font-semibold text-zinc-100 outline-none focus:border-violet-500"
+                className="w-full min-w-0 rounded-lg border border-zinc-700 bg-zinc-800/60 px-3 py-1.5 text-sm font-semibold text-zinc-100 outline-none focus:border-violet-500 sm:w-auto sm:flex-1"
               />
               <span className="rounded-full bg-zinc-800 px-2 py-0.5 text-[10px] uppercase tracking-wide text-zinc-500">
                 {section.kind}
               </span>
-              <Button title="Move up" onClick={() => moveSection(index, -1)}>
-                <Up />
-              </Button>
-              <Button title="Move down" onClick={() => moveSection(index, 1)}>
-                <Down />
-              </Button>
-              <Button
-                variant="danger"
-                title="Remove section"
-                onClick={() => removeSection(section.id)}
-              >
-                <Trash />
-              </Button>
+              <div className="ml-auto flex gap-1.5 sm:ml-0">
+                <Button title="Move up" onClick={() => moveSection(index, -1)}>
+                  <Up />
+                </Button>
+                <Button title="Move down" onClick={() => moveSection(index, 1)}>
+                  <Down />
+                </Button>
+                <Button
+                  variant="danger"
+                  title="Remove section"
+                  onClick={() => removeSection(section.id)}
+                >
+                  <Trash />
+                </Button>
+              </div>
             </div>
 
             {section.kind === 'entries' && (

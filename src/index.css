@@ -54,6 +54,14 @@ body {
     max-width: none !important;
   }
 
+  /* Al imprimir anulamos el escalado de ajuste: la hoja va a tamaño real. */
+  .print-area .cv-fit,
+  .print-area .cv-fit > div {
+    transform: none !important;
+    height: auto !important;
+    width: 100% !important;
+  }
+
   .print-area .cv-paper {
     box-shadow: none !important;
     border: none !important;

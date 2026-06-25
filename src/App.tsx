@@ -20,11 +20,13 @@ function loadInitial(): CVData {
 export default function App() {
   const [data, setDataState] = useState<CVData>(loadInitial);
   const [mobileView, setMobileView] = useState<'edit' | 'preview'>('edit');
+  const [savedAt, setSavedAt] = useState<number | null>(null);
   const fileInput = useRef<HTMLInputElement>(null);
 
-  // Autoguardado en localStorage
+  // Autoguardado en localStorage (con marca de "guardado" para tranquilidad).
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    setSavedAt(Date.now());
   }, [data]);
 
   const setData = (updater: (prev: CVData) => CVData) =>
@@ -78,6 +80,15 @@ export default function App() {
               elegant résumé builder
             </span>
           </h1>
+          {savedAt && (
+            <span
+              title="Tus cambios se guardan automáticamente en este navegador"
+              className="hidden items-center gap-1.5 rounded-full bg-emerald-500/10 px-2 py-0.5 text-[11px] font-medium text-emerald-400 sm:inline-flex"
+            >
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+              Guardado
+            </span>
+          )}
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
@@ -141,9 +152,7 @@ export default function App() {
             mobileView === 'preview' ? 'block' : 'hidden'
           }`}
         >
-          <div className="origin-top scale-[0.8] sm:scale-90 lg:scale-100">
-            <Preview data={data} />
-          </div>
+          <Preview data={data} />
         </div>
       </main>
     </div>

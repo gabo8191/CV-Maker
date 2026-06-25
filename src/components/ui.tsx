@@ -68,7 +68,7 @@ export function Button({
 }: BtnProps) {
   const styles: Record<string, string> = {
     primary:
-      'bg-zinc-100 text-zinc-900 hover:bg-white border border-transparent',
+      'bg-violet-600 text-white hover:bg-violet-500 border border-transparent shadow-sm shadow-violet-900/40',
     ghost:
       'text-zinc-300 border border-zinc-700 hover:border-zinc-500 hover:text-white',
     danger:
